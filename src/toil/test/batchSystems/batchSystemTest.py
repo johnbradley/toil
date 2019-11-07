@@ -197,7 +197,6 @@ class hidden(object):
              
             # Turn into a string which convinces bash to take all args and paste them back together and run them
             command = "bash -c \"\\${@}\" bash eval " + script_protected
-            log.critical(command)
             jobNode4 = JobNode(command=command, jobName='test4', unitName=None,
                                jobStoreID='4', requirements=defaultRequirements)
             job4 = self.batchSystem.issueBatchJob(jobNode4)
