@@ -22,8 +22,8 @@ py2_batch_systems:
   stage: test
   script:
     - pwd
-    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y awscli jq
-    - virtualenv -p python2.7 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor
+    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y jq
+    - virtualenv -p python2.7 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor awscli
     - mkdir -p ~/.kube
     - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
     - python -m pytest -r s src/toil/test/batchSystems/batchSystemTest.py
@@ -58,8 +58,8 @@ py2_main:
   stage: main_tests
   script:
     - pwd
-    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y awscli jq
-    - virtualenv -p python2.7 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor
+    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y jq
+    - virtualenv -p python2.7 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor awscli
     - mkdir -p ~/.kube
     - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
     - python -m pytest -r s src/toil/test/batchSystems/batchSystemTest.py
@@ -70,7 +70,7 @@ py2_integration_jobstore:
   stage: integration
   script:
     - pwd
-    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y awscli jq
+    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y jq
     - virtualenv -p python2.7 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor awscli
     - export TOIL_TEST_INTEGRATIVE=True
     - export TOIL_AWS_KEYNAME=id_rsa
@@ -84,7 +84,7 @@ py2_integration_sort:
   stage: integration
   script:
     - pwd
-    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y awscli jq
+    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y jq
     - virtualenv -p python2.7 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor awscli
     - export TOIL_TEST_INTEGRATIVE=True
     - export TOIL_AWS_KEYNAME=id_rsa
@@ -115,8 +115,8 @@ py3_batch_systems:
   stage: test
   script:
     - pwd
-    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y awscli jq
-    - virtualenv -p python3.6 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor
+    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y jq
+    - virtualenv -p python3.6 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor awscli
     - mkdir -p ~/.kube
     - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
     - python -m pytest -r s src/toil/test/batchSystems/batchSystemTest.py
@@ -160,7 +160,7 @@ py3_main:
 #  stage: integration
 #  script:
 #    - pwd
-#    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y awscli jq
+#    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y jq
 #    - virtualenv -p python3.6 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor awscli
 #    - export TOIL_TEST_INTEGRATIVE=True
 #    - export TOIL_AWS_KEYNAME=id_rsa
