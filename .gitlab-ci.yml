@@ -25,7 +25,7 @@ py2_batch_systems:
     - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y jq
     - virtualenv -p python2.7 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor awscli
     - mkdir -p ~/.kube
-    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
+    - aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString > ~/.kube/config
     - python -m pytest -r s src/toil/test/batchSystems/batchSystemTest.py
     - python -m pytest -r s src/toil/test/mesos/MesosDataStructuresTest.py
 
@@ -61,7 +61,7 @@ py2_main:
     - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y jq
     - virtualenv -p python2.7 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor awscli
     - mkdir -p ~/.kube
-    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
+    - aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString > ~/.kube/config
     - python -m pytest -r s src/toil/test/batchSystems/batchSystemTest.py
     - python -m pytest src/toil/test/src
     - python -m pytest src/toil/test/utils
@@ -118,7 +118,7 @@ py3_batch_systems:
     - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y jq
     - virtualenv -p python3.6 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor awscli
     - mkdir -p ~/.kube
-    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
+    - aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString > ~/.kube/config
     - python -m pytest -r s src/toil/test/batchSystems/batchSystemTest.py
     - python -m pytest -r s src/toil/test/mesos/MesosDataStructuresTest.py
 
