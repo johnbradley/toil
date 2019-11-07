@@ -135,11 +135,9 @@ class hidden(object):
             self.batchSystem.shutdown()
             super(hidden.AbstractBatchSystemTest, self).tearDown()
         
-        @travis_test
         def testAvailableCores(self):
             self.assertTrue(multiprocessing.cpu_count() >= numCores)
         
-        @travis_test
         def testRunJobs(self):
             jobNode1 = JobNode(command='sleep 1000', jobName='test1', unitName=None,
                                jobStoreID='1', requirements=defaultRequirements)
@@ -187,7 +185,6 @@ class hidden(object):
             # Make sure killBatchJobs can handle jobs that don't exist
             self.batchSystem.killBatchJobs([10])
         
-        @travis_test
         def testSetEnv(self):
             # Parasol disobeys shell rules and stupidly splits the command at
             # the space character into arguments before exec'ing it, whether
@@ -216,7 +213,6 @@ class hidden(object):
             self.assertEqual(exitStatus, 23)
             self.assertEqual(jobID, job5)
         
-        @travis_test
         def testCheckResourceRequest(self):
             if isinstance(self.batchSystem, BatchSystemSupport):
                 checkResourceRequest = self.batchSystem.checkResourceRequest
@@ -234,7 +230,6 @@ class hidden(object):
                                   memory=10, cores=None, disk=1000)
                 checkResourceRequest(memory=10, cores=1, disk=100)
        
-        @travis_test
         def testScalableBatchSystem(self):
             # If instance of scalable batch system
             pass
@@ -388,7 +383,7 @@ class MesosBatchSystemTest(hidden.AbstractBatchSystemTest, MesosTestSupport):
         # Make sure job is NOT running
         self.assertEqual(set(runningJobIDs), set({}))
 
-
+@travis_test
 class SingleMachineBatchSystemTest(hidden.AbstractBatchSystemTest):
     """
     Tests against the single-machine batch system
@@ -744,6 +739,7 @@ class HTCondorBatchSystemTest(hidden.AbstractGridEngineBatchSystemTest):
     def tearDown(self):
         super(HTCondorBatchSystemTest, self).tearDown()
 
+@travis_test
 class SingleMachineBatchSystemJobTest(hidden.AbstractBatchSystemJobTest):
     """
     Tests Toil workflow against the SingleMachine batch system
