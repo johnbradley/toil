@@ -23,7 +23,9 @@ py2_batch_systems:
   script:
     - pwd
     - virtualenv -p python2.7 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor
-    - python -m pytest -vv -r s src/toil/test/batchSystems/batchSystemTest.py
+    - mkdir -p ~/.kube
+    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
+    - python -m pytest -r s src/toil/test/batchSystems/batchSystemTest.py
     - python -m pytest -r s src/toil/test/mesos/MesosDataStructuresTest.py
 
 py2_cwl:
@@ -56,6 +58,9 @@ py2_main:
   script:
     - pwd
     - virtualenv -p python2.7 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor
+    - mkdir -p ~/.kube
+    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
+    - python -m pytest -r s src/toil/test/batchSystems/batchSystemTest.py
     - python -m pytest src/toil/test/src
     - python -m pytest src/toil/test/utils
 
@@ -71,8 +76,6 @@ py2_integration_jobstore:
     - python setup_gitlab_ssh.py
     - mkdir -p ~/.aws
     - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/credentials --region us-west-2 | jq -r .SecretString) > ~/.aws/credentials
-    - mkdir -p ~/.kube
-    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
     - python -m pytest src/toil/test/jobStores/jobStoreTest.py
 
 py2_integration_sort:
@@ -87,8 +90,6 @@ py2_integration_sort:
     - python setup_gitlab_ssh.py
     - mkdir -p ~/.aws
     - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/credentials --region us-west-2 | jq -r .SecretString) > ~/.aws/credentials
-    - mkdir -p ~/.kube
-    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
     - python -m pytest src/toil/test/sort/sortTest.py
     - python -m pytest src/toil/test/provisioners/clusterScalerTest.py
 
@@ -104,8 +105,6 @@ py2_integration_sort:
 #    - python setup_gitlab_ssh.py
 #    - mkdir -p ~/.aws
 #    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/credentials --region us-west-2 | jq -r .SecretString) > ~/.aws/credentials
-#    - mkdir -p ~/.kube
-#    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
 #    - python -m pytest src/toil/test/provisioners/aws/awsProvisionerTest.py
 
 
@@ -115,7 +114,9 @@ py3_batch_systems:
   script:
     - pwd
     - virtualenv -p python3.6 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor
-    - python -m pytest -vv -r s src/toil/test/batchSystems/batchSystemTest.py
+    - mkdir -p ~/.kube
+    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
+    - python -m pytest -r s src/toil/test/batchSystems/batchSystemTest.py
     - python -m pytest -r s src/toil/test/mesos/MesosDataStructuresTest.py
 
 py3_cwl:
@@ -164,6 +165,4 @@ py3_main:
 #    - python setup_gitlab_ssh.py
 #    - mkdir -p ~/.aws
 #    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/credentials --region us-west-2 | jq -r .SecretString) > ~/.aws/credentials
-#    - mkdir -p ~/.kube
-#    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
 #    - python -m pytest src/toil/test/jobStores/jobStoreTest.py
