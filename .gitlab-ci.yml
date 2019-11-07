@@ -22,6 +22,7 @@ py2_batch_systems:
   stage: test
   script:
     - pwd
+    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y awscli jq
     - virtualenv -p python2.7 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor
     - mkdir -p ~/.kube
     - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
@@ -57,6 +58,7 @@ py2_main:
   stage: main_tests
   script:
     - pwd
+    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y awscli jq
     - virtualenv -p python2.7 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor
     - mkdir -p ~/.kube
     - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
@@ -113,6 +115,7 @@ py3_batch_systems:
   stage: test
   script:
     - pwd
+    - apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y awscli jq
     - virtualenv -p python3.6 venv && . venv/bin/activate && make prepare && make develop extras=[all] && pip install htcondor
     - mkdir -p ~/.kube
     - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
