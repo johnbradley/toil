@@ -69,8 +69,10 @@ py2_integration_jobstore:
     - export TOIL_AWS_KEYNAME=id_rsa
     - export TOIL_AWS_ZONE=us-west-2a
     - python setup_gitlab_ssh.py
-    - mkdir ~/.aws
+    - mkdir -p ~/.aws
     - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/credentials --region us-west-2 | jq -r .SecretString) > ~/.aws/credentials
+    - mkdir -p ~/.kube
+    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
     - python -m pytest src/toil/test/jobStores/jobStoreTest.py
 
 py2_integration_sort:
@@ -83,8 +85,10 @@ py2_integration_sort:
     - export TOIL_AWS_KEYNAME=id_rsa
     - export TOIL_AWS_ZONE=us-west-2a
     - python setup_gitlab_ssh.py
-    - mkdir ~/.aws
+    - mkdir -p ~/.aws
     - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/credentials --region us-west-2 | jq -r .SecretString) > ~/.aws/credentials
+    - mkdir -p ~/.kube
+    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
     - python -m pytest src/toil/test/sort/sortTest.py
     - python -m pytest src/toil/test/provisioners/clusterScalerTest.py
 
@@ -98,8 +102,10 @@ py2_integration_sort:
 #    - export TOIL_AWS_KEYNAME=id_rsa
 #    - export TOIL_AWS_ZONE=us-west-2a
 #    - python setup_gitlab_ssh.py
-#    - mkdir ~/.aws
+#    - mkdir -p ~/.aws
 #    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/credentials --region us-west-2 | jq -r .SecretString) > ~/.aws/credentials
+#    - mkdir -p ~/.kube
+#    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
 #    - python -m pytest src/toil/test/provisioners/aws/awsProvisionerTest.py
 
 
@@ -156,6 +162,8 @@ py3_main:
 #    - export TOIL_AWS_KEYNAME=id_rsa
 #    - export TOIL_AWS_ZONE=us-west-2a
 #    - python setup_gitlab_ssh.py
-#    - mkdir ~/.aws
+#    - mkdir -p ~/.aws
 #    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/credentials --region us-west-2 | jq -r .SecretString) > ~/.aws/credentials
+#    - mkdir -p ~/.kube
+#    - echo -e $(aws secretsmanager get-secret-value --secret-id allspark/runner/kubeconfig --region us-west-2 | jq -r .SecretString) > ~/.kube/config
 #    - python -m pytest src/toil/test/jobStores/jobStoreTest.py
