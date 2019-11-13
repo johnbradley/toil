@@ -187,8 +187,8 @@ class SlurmBatchSystem(AbstractGridEngineBatchSystem):
             if cpu is not None:
                 sbatch_line.append('--cpus-per-task={}'.format(int(math.ceil(cpu))))
 
-            stdoutfile = self.boss.formatStdOutErrPath(jobID, 'slurm', '%j', 'std_output')
-            stderrfile = self.boss.formatStdOutErrPath(jobID, 'slurm', '%j', 'std_error')
+            stdoutfile = "/tmp/toil_{}_%j_std_output.log".format(jobID)
+            stderrfile = "/tmp/toil_{}_%j_std_error.log".format(jobID)
             sbatch_line.extend(['-o', stdoutfile, '-e', stderrfile])
 
             # "Native extensions" for SLURM (see DRMAA or SAGA)
